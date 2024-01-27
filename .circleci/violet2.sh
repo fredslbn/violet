@@ -201,10 +201,7 @@ function cloneTC() {
     
     elif [ $COMPILER = "clang17-7" ];
 	then
-	#git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/ -b android10-gsi --depth 1 --no-tags --single-branch clang_all	
     wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r498229b.tar.gz && mkdir clang && tar -xzvf clang-r498229b.tar.gz -C clang/
-    #mv clang_all/clang-r353983c clang
-    #rm -rf clang_all
     export KERNEL_CLANG_PATH="${KERNEL_DIR}/clang"
     export KERNEL_CLANG="clang"
     export PATH="$KERNEL_CLANG_PATH/bin:$PATH"
@@ -242,7 +239,7 @@ function cloneTC() {
 	fi
 	
     # Clone AnyKernel
-    #git clone --depth=1 https://github.com/missgoin/AnyKernel3.git
+    # git clone --depth=1 https://github.com/missgoin/AnyKernel3.git
 
 	}
 
@@ -280,7 +277,7 @@ function exports() {
         export SUBARCH=arm64
         
         # Export Local Version
-        #export LOCALVERSION="-${VERSION}"
+        # export LOCALVERSION="-${VERSION}"
         
         # KBUILD HOST and USER
         export KBUILD_BUILD_HOST=Pancali
@@ -290,8 +287,8 @@ function exports() {
 	    export DISTRO=$(source /etc/os-release && echo "${NAME}")
 	    
 	    # Server caching for speed up compile
-	    #export LC_ALL=C && export USE_CCACHE=1
-	    #ccache -M 100G
+	    # export LC_ALL=C && export USE_CCACHE=1
+	    # ccache -M 100G
 	
 	}
         
@@ -341,14 +338,6 @@ START=$(date +"%s")
            LD=${LINKER} \
            LLVM=1 \
            LLVM_IAS=1 \
-           #AR=llvm-ar \
-           #AS=llvm-as \
-           #NM=llvm-nm \
-           #OBJCOPY=llvm-objcopy \
-           #OBJDUMP=llvm-objdump \
-           #STRIP=llvm-strip \
-           #READELF=llvm-readelf \
-	       #OBJSIZE=llvm-size \
 	       V=$VERBOSE 2>&1 | tee error.log
 	       
 	elif [ -d ${KERNEL_DIR}/cosmic ];
@@ -429,15 +418,15 @@ function zipping() {
 	# Copy Files To AnyKernel3 Zip
 	cp $IMAGE AnyKernel3
 	cp $DTBO AnyKernel3
-	#find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb.img
+	# find $DTB -name "*.dtb" -exec cat {} + > AnyKernel3/dtb.img
 	
 	# Zipping and Push Kernel
 	cd AnyKernel3 || exit 1
         zip -r9 ${ZIPNAME} *
         MD5CHECK=$(md5sum "$ZIPNAME" | cut -d' ' -f1)
         echo "Zip: $ZIPNAME"
-        #curl -T $ZIPNAME temp.sh; echo
-        #curl -T $ZIPNAME https://oshi.at; echo
+        # curl -T $ZIPNAME temp.sh; echo
+        # curl -T $ZIPNAME https://oshi.at; echo
         curl --upload-file $ZIPNAME https://free.keep.sh
     cd ..
 }
