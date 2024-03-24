@@ -44,7 +44,7 @@ ZIPNAME="SUPER.KERNEL-VIOLET-(clanglinaro)-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M"
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=clang18-7
+COMPILER=clang17-7
 
 ##----------------------------------------------------------##
 # Specify Linker
